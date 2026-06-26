@@ -1,1 +1,0 @@
-salam ana smiti <?php echo $prenom ,"", $nom ?>
