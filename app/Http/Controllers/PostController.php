@@ -79,5 +79,10 @@ return back()->withErrors([
     'email' => 'Invalid email or password'
 ]);
     }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
 
 }
