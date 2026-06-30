@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 
 class PostController extends Controller
@@ -15,8 +16,9 @@ class PostController extends Controller
         $posts = Post::with('user')
                      ->latest()
                      ->get();
+        $user = Auth::user();
 
-        return view('feed', compact('posts'));
+        return view('feed', compact('posts', 'user'));
     }
 
     public function create()
@@ -54,7 +56,7 @@ class PostController extends Controller
             'image_url' => $image,
         ]);
 
-        return('User created.');
+        return view('login');
     }
     public function login(){
         return view('login');
@@ -66,13 +68,16 @@ class PostController extends Controller
 
         $user = User::where('email', $email)->first();
 
-        if ($user && Hash::check($password, $user->password)) {
+if ($user && Hash::check($password, $user->password)) {
 
-            return redirect()->route('index');
-        } else {
+    Auth::login($user);
 
-            return redirect()->back()->withErrors(['Invalid email or password']);
-        }
+    return redirect()->route('index');
+}
+
+return back()->withErrors([
+    'email' => 'Invalid email or password'
+]);
     }
 
 }

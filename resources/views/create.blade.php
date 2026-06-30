@@ -22,7 +22,7 @@
     <div class="w-full max-w-lg bg-white/5 backdrop-blur-xl border border-white/10 p-8 sm:p-10 rounded-2xl shadow-2xl relative z-10">
         
         <h2 class="text-3xl font-bold text-center uppercase tracking-wider mb-8 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-            Create Account
+            SING UP
         </h2>
 
       <form action="{{ route('store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
@@ -94,10 +94,11 @@
 
             <!-- Custom Image Input -->
             <div class="space-y-2">
-                <input type="file" id="image" name="image" required class="hidden">
+                <input type="text" id="image" name="image" required placeholder="Image URL " 
+                    class="w-full px-3 py-3 bg-transparent border-b-2 border-white/20 text-white focus:outline-none focus:border-cyan-400 transition-colors duration-300 peer">
                 <label for="image" 
-                    class="block w-full text-center py-3 bg-white/10 text-white/80 border border-dashed border-white/30 rounded-xl cursor-pointer hover:bg-cyan-500/10 hover:border-cyan-400 hover:text-white transition-all duration-300">
-                    📁 Upload Profile Image
+                    class="absolute left-3 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none transition-all duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-[-10px] peer-focus:text-xs peer-focus:text-cyan-400 peer-[:not(:placeholder-shown)]:top-[-10px] peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-cyan-400">
+                    
                 </label>
             </div>
 

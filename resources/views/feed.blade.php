@@ -61,7 +61,6 @@
 
         </div>
     </header>
-
     <!-- MAIN BODY GRID -->
     <div class="max-w-6xl mx-auto px-4 mt-6 grid grid-cols-1 md:grid-cols-4 gap-5 items-start">
         
@@ -73,10 +72,10 @@
             <!-- Avatar & Info -->
             <div class="px-4 pb-4 text-center border-b border-gray-200 relative">
                 <!-- Avatar shifted up -->
-                <div class="w-16 h-16 rounded-full bg-blue-600 text-white border-2 border-white flex items-center justify-center font-bold text-2xl uppercase mx-auto -mt-8 shadow-sm">
-                    U
+                <div class="">
+                   <img class="w-16 h-16 rounded-full bg-blue-600 text-white border-2 border-white flex items-center justify-center font-bold text-2xl uppercase mx-auto -mt-8 shadow-sm" src="{{ $user->image_url }}" alt="">
                 </div>
-                <h2 class="font-semibold text-gray-950 mt-3 hover:underline cursor-pointer">Monir El</h2>
+                <h2 class="font-semibold text-gray-950 mt-3 hover:underline cursor-pointer">{{ $user->name }}</h2>
                 <p class="text-xs text-gray-500 mt-1 leading-normal">Full Stack Web Developer | Laravel & Tailwind enthusiast</p>
             </div>
 
@@ -110,7 +109,7 @@
                 <div class="flex items-center p-4 pb-2">
                     <!-- Profile Avatar Placeholder -->
                     <div class="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg uppercase shadow-inner mr-3 shrink-0">
-                        {{ substr($post->user->name, 0, 1) }}
+                        <img src="{{ $post->user->image_url }}" alt="Profile Image" class="w-full h-full object-cover rounded-full">
                     </div>
                     
                     <div>

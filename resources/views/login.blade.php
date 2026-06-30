@@ -22,7 +22,7 @@
     <div class="w-full max-w-lg bg-white/5 backdrop-blur-xl border border-white/10 p-8 sm:p-10 rounded-2xl shadow-2xl relative z-10">
         
         <h2 class="text-3xl font-bold text-center uppercase tracking-wider mb-8 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-            LOGIN
+            SING IN
         </h2>
 
       <form action="{{ route('login') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
