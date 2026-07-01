@@ -12,3 +12,5 @@ Route::post('/store', [PostController::class, 'store'])->name('store');
 Route::get("/login",[PostController::class,'login'])->name('login');
 Route::post("/login",[PostController::class,'login1'])->name('login1');
 route::post('/logout', [PostController::class, 'logout'])->name('logout');
+route::post('/posts.store', [PostController::class, 'postStore'])->name('posts.store');
+route::post('/modifier.post', [PostController::class, 'modifierPost'])->name('modifier.post');

@@ -83,6 +83,19 @@ return back()->withErrors([
     {
         Auth::logout();
         return redirect()->route('login');
+    }public function postStore(Request $request)
+    {
+        $request->validate([
+            'content' => 'required',
+        ]);
+
+        $post = new Post();
+        $post->content = $request->input('content');
+        $post->user_id = Auth::id();
+        $post->save();
+
+        return redirect()->route('index');
     }
+
 
 }
