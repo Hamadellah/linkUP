@@ -96,17 +96,23 @@ return back()->withErrors([
 
         return redirect()->route('index');
     }
-public function modifierPost(Request $request, $id) // <-- Zdna $id hna
+public function modifierPost(Request $request, $id)
 {
     $request->validate([
-        'content' => 'required', // Ma-bqach khassna exists:posts,id hit l-id jayi m l-URL
+        'content' => 'required',
     ]);
 
-    $post = Post::findOrFail($id); // Kay-jbed l-post direct wila malqahch kay-tourni 404
+    $post = Post::findOrFail($id);
     $post->content = $request->input('content');
     $post->save();  
 
     return redirect()->back()->with('success', 'Post modifié avec succès !');
 }
+public function destroy($id)
+{
+    $post = Post::findOrFail($id);
+    $post->delete();
 
+    return redirect()->back()->with('success', 'Post supprimé avec succès !');
+}
 }

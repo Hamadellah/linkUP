@@ -14,3 +14,4 @@ Route::post("/login",[PostController::class,'login1'])->name('login1');
 route::post('/logout', [PostController::class, 'logout'])->name('logout');
 route::post('/posts.store', [PostController::class, 'postStore'])->name('posts.store');
 Route::put('/posts.modifier/{id}', [PostController::class, 'modifierPost'])->name('posts.update');
+route::delete('/posts.destroy/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
