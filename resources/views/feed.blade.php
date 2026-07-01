@@ -47,7 +47,7 @@
                 <div class="flex items-center gap-2 border-l border-gray-200 pl-4">
                     <div class="flex flex-col items-center justify-center min-w-[50px] cursor-pointer">
                         <div class="w-6 h-6 rounded-full bg-gray-400 text-white flex items-center justify-center text-[10px] font-bold uppercase">
-                            M
+                            {{ substr($user->name, 0, 1) }}
                         </div>
                         <span class="text-[11px] font-medium hidden md:inline mt-0.5">Me <i class="fa-solid fa-caret-down text-[9px]"></i></span>
                     </div>
@@ -101,6 +101,12 @@
                 <i class="fa-solid fa-plus text-sm"></i> Ajouter un post
             </button>
 
+            @if(session('success'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl text-sm font-medium">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             @foreach($posts as $post)
             <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                 <div class="flex items-center p-4 pb-2">
@@ -113,7 +119,7 @@
                             {{ $post->user->name }}
                         </h3>
                         <p class="text-xs text-gray-500 flex items-center gap-1 mt-0.5">
-                            <span>Headline / Member</span>
+                            <span>{{ $post->user->headline }}</span>
                             <span>•</span>
                             <span>{{ $post->created_at ? $post->created_at->diffForHumans() : 'Just now' }}</span>
                             <span>•</span>
@@ -198,9 +204,8 @@
                 </button>
             </div>
 
-            <form id="editPostForm" action="modifier.post" method="POST" class="m-0">
+            <form id="editPostForm" method="POST" class="m-0">
                 @csrf
-    <input type="hidden" id="editPostId" name="post_id">
                 @method('PUT') <div class="p-6">
                     <div class="flex items-center gap-3 mb-4">
                         <img class="w-12 h-12 rounded-full object-cover border border-gray-200" src="{{ $user->image_url }}" alt="Profile image">
@@ -256,36 +261,33 @@
         closeModalBtn.addEventListener('click', closeModal);
 
 
-        // --- LOGIC DIAL EDIT MODAL (Jdid) ---
+        // --- LOGIC DIAL EDIT MODAL ---
         const editPostModal = document.getElementById('editPostModal');
         const closeEditModalBtn = document.getElementById('closeEditModalBtn');
         const cancelEditBtn = document.getElementById('cancelEditBtn');
         const editPostForm = document.getElementById('editPostForm');
         const editPostContent = document.getElementById('editPostContent');
         
-        // Kanchdo jmi3 l-boutonnat li 3ndhom class 'open-edit-modal-btn'
-document.querySelectorAll('.open-edit-modal-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const postId = button.getAttribute('data-id');
-        const postContentContainer = document.getElementById(`post-content-${postId}`);
-        const currentContent = postContentContainer.innerText.trim();
+        document.querySelectorAll('.open-edit-modal-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const postId = button.getAttribute('data-id');
+                const postContentContainer = document.getElementById(`post-content-${postId}`);
+                const currentContent = postContentContainer.innerText.trim();
 
-        // 1. N-puttiw l-text f textarea
-        editPostContent.value = currentContent;
+                // 1. Injecter l-text wast l-textarea
+                editPostContent.value = currentContent;
 
-        // 2. N-puttiw l-id f l-input hidden li l-foq (Bach iqrah l-controller dyalk)
-        document.getElementById('editPostId').value = postId;
+                // 2. Changer l'action dynamic matchan m3a route: /posts.modifier/{id}
+                editPostForm.action = `/posts.modifier/${postId}`; 
 
-        // 3. L-action dyal l-form tqder t-redha fixed kadi l-route dyal modifierPost
-        editPostForm.action = "/posts/modifier"; // Smiyat l-route dyalk f web.php
-
-        editPostModal.classList.remove('hidden');
-        setTimeout(() => {
-            editPostModal.querySelector('.transform').classList.remove('scale-95');
-            editPostModal.querySelector('.transform').classList.add('scale-100');
-        }, 10);
-    });
-});
+                // 3. Ouvrir la modal avec animation
+                editPostModal.classList.remove('hidden');
+                setTimeout(() => {
+                    editPostModal.querySelector('.transform').classList.remove('scale-95');
+                    editPostModal.querySelector('.transform').classList.add('scale-100');
+                }, 10);
+            });
+        });
 
         const closeEditModal = () => {
             editPostModal.querySelector('.transform').classList.remove('scale-100');
@@ -296,7 +298,7 @@ document.querySelectorAll('.open-edit-modal-btn').forEach(button => {
         closeEditModalBtn.addEventListener('click', closeEditModal);
         cancelEditBtn.addEventListener('click', closeEditModal);
 
-        // Ila clicka user bera l-modals b joj ysedhom
+        // Fermer les modals si on clique à l'extérieur
         window.addEventListener('click', (e) => {
             if (e.target === postModal) closeModal();
             if (e.target === editPostModal) closeEditModal();
