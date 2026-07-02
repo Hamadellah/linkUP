@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
 
 
 class PostController extends Controller
@@ -101,6 +103,9 @@ public function modifierPost(Request $request, $id)
     $request->validate([
         'content' => 'required',
     ]);
+    gate::authorize('update', Post::findOrFail($id));
+    
+    $this->authorize('update', Post::findOrFail($id));
 
     $post = Post::findOrFail($id);
     $post->content = $request->input('content');
@@ -110,8 +115,12 @@ public function modifierPost(Request $request, $id)
 }
 public function destroy($id)
 {
+    
+    $this->authorize('delete', Post::findOrFail($id));
+
     $post = Post::findOrFail($id);
     $post->delete();
+
 
     return redirect()->back()->with('success', 'Post supprimé avec succès !');
 }
