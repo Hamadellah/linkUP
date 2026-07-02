@@ -14,15 +14,12 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
 
-            // Clé étrangère vers users
             $table->foreignId('user_id')
                   ->constrained()
                   ->cascadeOnDelete();
 
-            // Contenu du post
             $table->text('content');
 
-            // created_at et updated_at
             $table->timestamps();
         });
     }
